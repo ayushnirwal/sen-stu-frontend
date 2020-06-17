@@ -19,7 +19,7 @@ export default function Scan() {
     const token = await AsyncStorage.getItem("@token")
     // post req to mark atten
 
-    fetch('https://192.168.122.1:3001/markMe', {
+    fetch('https://sen-fake-backend.herokuapp.com/markMe', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -33,7 +33,7 @@ export default function Scan() {
       .then((response)=>response.json())
       .then(async (json)=>{
             if(json.msg != undefined){
-              alert(json.msg);
+              alert(json.msg + " for " + data.substring(0,5) );
             }
             else{
               alert(`Cant communicate to server`);
@@ -43,7 +43,7 @@ export default function Scan() {
       })
       .catch((error)=>{
           console.log(error);
-          alert(`Cant communicate to server error`);
+          alert(`no response`);
       })
 
 

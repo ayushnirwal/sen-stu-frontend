@@ -1,42 +1,136 @@
 import React, { Component, useState } from 'react';
-import { Text, TextInput, View , StyleSheet, Button} from 'react-native';
+import CustomButton from './CustomButton';
+import { Text, TextInput, View , StyleSheet, Button, AsyncStorage} from 'react-native';
 
 class Stats extends Component{
-    componentWillMount = () =>{
-        fetch('https://192.168.122.1/stuStats', {
+  state={
+    courseList:null,
+    page:'stats',
+    selectedCourse:undefined,
+    data:undefined
+  }
+    componentDidMount = async () =>{
+        const token = await AsyncStorage.getItem('@token')
+        this.setState({
+          token
+        })
+        fetch('https://sen-fake-backend.herokuapp.com/courseList', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          qr:data
+          token,
         })
       })
       .then((response)=>response.json())
       .then(async (json)=>{
-            if(json.msg != undefined){
-              alert(`Wait bitch`);
+            if(json.courseList != undefined){
+              
+              this.setState({
+                courses:json.courseList
+              })
             }
             else{
-              alert(`Cant communicate to server`);
+              alert(`wrong resposne`);
             }
             
         
       })
       .catch((error)=>{
           console.log(error);
-          alert(`Cant communicate to server`);
+          alert(`Error:Cant communicate to server`);
+      })
+    }
+
+    handlePress = (course) =>{
+      this.setState({
+        selectedCourse:course,
+        page:'coursepage'
+
+      })
+      fetch('https://sen-fake-backend.herokuapp.com/stuStats', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token:this.state.token,
+          course:course
+        })
+      })
+      .then((response)=>response.json())
+      .then(async (json)=>{
+            this.setState({
+              data:json
+            })
+            
+            
+        
+      })
+      .catch((error)=>{
+          console.log(error);
+          alert(`Error:Cant communicate to server`);
       })
     }
   
     render(){
-        return(
-            <View style ={styles.container}>
-                <Text>Stats</Text>
-            </View>
-        )
+      if (this.state.page == "stats")
+        {
+          let courses = undefined;
+          if (this.state.courses != undefined )
+            courses = this.state.courses.map((course)=>{
+            return(
+              <CustomButton style={styles.button}
+                                  text={course}
+                                  textStyling={styles.buttonFont}
+                                  key={course}
+                                  onPress={()=>{this.handlePress(course)}}
+                              />
+            )
+          })
+          return(
+            
+              <View style ={styles.container}>
+                  <Text>Stats</Text>
+                  {courses}
+              </View>
+          )
+        }
+        else{
+            let table = null
+            if(this.state.data!= undefined){
+              table  = this.state.data.Sheet.map((obj)=>{
+                const text = obj.Attended?"Present":"Absent";
+                return  ( 
+                  <View>
+                    <Text> {obj.Date} - {text} </Text>
+                  </View>
+                  
+                )
+              })
+              return(
+                <View style ={styles.container}>
+                  <Text>{this.state.selectedCourse}</Text>
+                  <Text>Total: {this.state.data.Total}</Text>
+                  <Text>Attended: {this.state.data.Attended}</Text>
+                  {table}
+              </View>
+              )
+
+            }
+            return(
+              <View style ={styles.container}>
+                  <Text>{this.state.selectedCourse}</Text>
+                  <Text>Requesting Data</Text>
+              </View>
+            )
+        }
+      
     }
+    
 }
 const styles = StyleSheet.create({
     container: {
@@ -45,7 +139,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor:'#f5dEB3',
         
-    }
+    },
+    button:{
+      marginTop:20,
+  },
+  buttonFont:{
+      fontSize:20,
+      fontWeight:'bold',
+  }
     
   });
 
