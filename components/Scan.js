@@ -19,7 +19,7 @@ export default function Scan() {
     const token = await AsyncStorage.getItem("@token")
     // post req to mark atten
 
-    fetch('https://sen-fake-backend.herokuapp.com/markMe', {
+    fetch('https://sen-backend.herokuapp.com/stu/markMe', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -27,7 +27,7 @@ export default function Scan() {
         },
         body: JSON.stringify({
           token,
-          qr:data
+          QR:data
         })
       })
       .then((response)=>response.json())

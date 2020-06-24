@@ -13,7 +13,7 @@ class MainMenu extends Component{
         const token = await AsyncStorage.getItem('@token');
         
         
-        fetch('https://sen-react.herokuapp.com/auth/logout', {
+        fetch('https://sen-backend.herokuapp.com/stu/logout', {
             method: 'POST',
             headers: {
             Accept: 'application/json',

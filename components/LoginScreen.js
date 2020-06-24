@@ -11,7 +11,7 @@ class LoginScreen extends Component{
     }
   
   loginRequest  = () =>{
-    fetch('https://sen-react.herokuapp.com/auth/login', {
+    fetch('https://sen-backend.herokuapp.com/stu/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

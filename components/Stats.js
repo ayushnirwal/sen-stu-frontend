@@ -14,7 +14,7 @@ class Stats extends Component{
         this.setState({
           token
         })
-        fetch('https://sen-fake-backend.herokuapp.com/courseList', {
+        fetch('https://sen-backend.herokuapp.com/stu/getCourseList', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -50,7 +50,7 @@ class Stats extends Component{
         page:'coursepage'
 
       })
-      fetch('https://sen-fake-backend.herokuapp.com/stuStats', {
+      fetch('https://sen-backend.herokuapp.com/stu/getStats', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
