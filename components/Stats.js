@@ -26,13 +26,15 @@ class Stats extends Component{
       })
       .then((response)=>response.json())
       .then(async (json)=>{
-            if(json.courseList != undefined){
+            if(json.courses != undefined){
               
               this.setState({
-                courses:json.courseList
+                courses:json.courses
               })
+              
             }
             else{
+              console.log(json)
               alert(`wrong resposne`);
             }
             

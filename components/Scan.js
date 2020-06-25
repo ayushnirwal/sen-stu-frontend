@@ -33,7 +33,7 @@ export default function Scan() {
       .then((response)=>response.json())
       .then(async (json)=>{
             if(json.msg != undefined){
-              alert(json.msg + " for " + data.substring(0,5) );
+              alert(json.msg );
             }
             else{
               alert(`Cant communicate to server`);
