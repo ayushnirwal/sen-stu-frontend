@@ -29,6 +29,7 @@
       "package": "com.yourcompany.yourappname",
       "versionCode": 1
     },
-    "entryPoint": "node_modules/expo/AppEntry.js"
+    "entryPoint": "node_modules/expo/AppEntry.js",
+    "description": ""
   }
 }

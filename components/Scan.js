@@ -52,7 +52,7 @@ export default function Scan() {
   if (hasPermission === null) {
     return (
         <View style={styles.container}>
-            <Text>Wait bitch</Text>
+            <Text>Please bitch</Text>
         </View>
     )
   }
