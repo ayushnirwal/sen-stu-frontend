@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     
     },
     input:{
-        width:'100%',
+        width:200,
         backgroundColor:'#FFFCC8',
         marginTop:20,
         fontSize:18,
